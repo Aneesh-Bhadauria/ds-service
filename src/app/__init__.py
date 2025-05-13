@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import request,jsonify
-from app.service import messageService
+# from app.service import messageService
 from service.messageService import MessageService
 from kafka import KafkaProducer
 import json
@@ -10,7 +10,7 @@ app.config.from_pyfile('config.py')
 
 messageService = MessageService()
 
-producer = KafkaProducer(bootstrap_servers = ['localhost:9092'],
+producer = KafkaProducer(bootstrap_servers = ['host.docker.internal:29092'],
                          value_serializer = lambda v: json.dumps(v).encode('utf-8')
                          )
 
@@ -20,12 +20,12 @@ def handle_message():
     result = messageService.process_message(message)
     serialized_result = result.json()
 
-    producer.send('your_kafka_topic',serialized_result)
+    producer.send('expense_service',serialized_result)
     return jsonify(result)
 
 @app.route('/',methods=['GET'])
 def hangle_get():
-    print("Hello World")
+    return 'Hello World'
 
 if __name__ == "__main__":
     app.run(host="localhost",port="8000",debug=True)

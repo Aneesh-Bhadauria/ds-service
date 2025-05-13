@@ -28,4 +28,4 @@ class LLMService:
        self.runnable = self.prompt | self.llm.with_structured_output(schema=Expense)
 
     def runLLm(self,message):
-        self.runnable.invoke({"text" : message})
+       return self.runnable.invoke({"text" : message})
