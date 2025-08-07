@@ -2,5 +2,5 @@
 
 /src/app/service/__pycache__
 /src/app/utils/__pycache__
-
+/dist
 /.env
